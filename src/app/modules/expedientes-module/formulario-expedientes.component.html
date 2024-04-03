@@ -1,0 +1,41 @@
+<h2 class="text-center">Expedientes</h2>
+
+<section class="container mt-3">
+  <form (ngSubmit)="expedienteParaActualizar ? actualizarExpediente() : insertarExpediente()">
+    <section class="mb-3">
+      <label for="codigo" class="form-label">Codigo</label>
+      <input type="text" class="form-control" id="codigo" [(ngModel)]="codigo" name="codigo">
+    </section>
+    <table class="table mt-3">
+      <thead>
+          <tr>
+              <th scope="col">ID</th>
+              <th scope="col">CODIGO</th>
+              <th scope="col">RESPONSABLE</th>
+              <th scope="col">FECHA</th>
+              <th scope="col">ESTADO</th>
+              <th scope="col">OPCIONES</th>
+              <th scope="col">DESCRIPCION</th>
+              <th scope="col">TIPO</th>
+          </tr>
+      </thead>
+      <!-- Modifico la tabla para añadir los botones adicionales -->
+      <tbody>
+          <tr *ngFor="let expediente of expedientes">
+              <td>{{ expediente.id }}</td>
+              <td>{{ expediente.codigo }}</td>
+              <td>{{ expediente.responsable }}</td>
+              <td>{{ expediente.fecha }}</td>
+              <td>{{ expediente.estado }}</td>
+              <td>{{ expediente.opciones }}</td>
+              <td>{{ expediente.descripcion }}</td>
+              <td>{{ expediente.tipo.materia }}</td>
+              <td>
+                  <button class="btn btn-warning btn-sm" (click)="prepararActualizacion(expediente)">Actualizar</button>
+                  <button class="btn btn-danger btn-sm" (click)="borrarExpediente(expediente.id)">Borrar</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  </form>
+</section>
