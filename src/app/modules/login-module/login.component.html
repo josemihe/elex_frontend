@@ -1,0 +1,18 @@
+<form [formGroup]="loginForm">
+    <p class="text-danger">{{loginError}}</p>
+    <div class="mb-3">
+      <label for="username" class="form-label">Nombre de Usuario</label>
+      <input formControlName="username" type="text" class="form-control" id="username">  
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <input formControlName="password" type="password" class="form-control" id="password">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="text-danger">
+            <div *ngIf="password.errors?.['required']">
+                Introduzca la contraseña
+            </div>
+        </div> 
+    </div>
+    <button type="submit" (click)="login()" class="btn btn-primary">Iniciar Sesión</button>
+</form>

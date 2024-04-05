@@ -1,1 +1,3 @@
-export const environment = {};
+export const environment = {
+    urlHost: 'http://localho'
+};

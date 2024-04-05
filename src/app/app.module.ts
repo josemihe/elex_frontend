@@ -8,7 +8,11 @@ import { AppComponent } from './app.component';
 
 // Hay que añadir estos componentes de Librerias Angular
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { JwtInterceptorService } from './services/auth/jwt-interceptor.service';
+import { ErrorInterceptorService } from './services/auth/error-interceptor.service';
+import { LoginService } from './services/auth/login.service'; 
+
 
 
 @NgModule({
@@ -22,7 +26,11 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptorService,multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptorService,multi:true},
+    LoginService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
