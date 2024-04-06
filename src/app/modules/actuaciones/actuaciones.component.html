@@ -1,0 +1,53 @@
+<h2 class="text-center">Actuaciones</h2>
+
+<section class="container mt-3">
+  <form [formGroup]="actuacionForm" (ngSubmit)="actuacionParaActualizar ? actualizarActuacion() : insertarActuacion()">
+    <section class="mb-3">
+        <label for="descripcion" class="form-label">Descripcion</label>
+        <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
+        
+        <label for="finalizado" class="form-label">Finalizado</label>
+        <input type="checkbox" class="form-check-input" id="finalizado" formControlName="finalizado">
+        
+        <label for="fecha" class="form-label">Fecha</label>
+        <input type="text" id="fecha" name="fecha" class="form-control" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" formControlName="fecha">
+        
+        <label for="expedienteId" class="form-label">ID Expediente</label>
+        <input type="text" class="form-control" id="expedienteId" formControlName="expedienteId" readonly>
+        
+        <button type="button" class="btn btn-primary" (click)="insertarActuacion()" *ngIf="!actuacionParaActualizar">Insertar</button>
+        <section *ngIf="actuacionParaActualizar">
+            <button type="submit" class="btn btn-warning">Actualizar</button>
+            <button type="button" class="btn btn-light" (click)="cancelarActualizacion()">Cancelar</button>
+        </section>
+    </section>
+</form>
+
+
+  <table class="table mt-3">
+    <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">DESCRIPCION</th>
+            <th scope="col">FECHA</th>
+            <th scope="col">FINALIZADO</th>
+            <th scope="col">ID EXPEDIENTE</th>
+        </tr>
+    </thead>
+    <!-- Modifico la tabla para añadir los botones adicionales -->
+    <tbody>
+      <tr *ngFor="let actuacion of actuaciones">
+          <td>{{ actuacion.id }}</td>
+          <td>{{ actuacion.descripcion }}</td>
+          <td>{{ actuacion.fecha }}</td>
+          <td>{{ actuacion.finalizado }}</td>
+          <td>{{ actuacion.expediente.id }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="prepararActualizacion(actuacion)">Actualizar</button>
+            <button class="btn btn-danger btn-sm" (click)="borrarActuacion(actuacion.id)">Borrar</button>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+

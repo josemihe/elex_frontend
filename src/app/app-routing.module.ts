@@ -20,6 +20,11 @@ const routes: Routes = [
     path: 'login',
     loadChildren: () => import('./modules/login-module/login-module.module').then(m => m.LoginModule),
     data: { hideHeader: true }
+  },
+  {
+    path: 'actuaciones',
+    loadChildren: () => import('./modules/actuaciones/actuaciones.module').then(m => m.ActuacionesModule),
+    canActivate: [canActivateGuard],
   }
 ];
 

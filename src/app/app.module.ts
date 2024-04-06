@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptorService } from './services/auth/jwt-interceptor.service';
 import { ErrorInterceptorService } from './services/auth/error-interceptor.service';
 import { LoginService } from './services/auth/login.service'; 
+import { ActuacionesModule } from './modules/actuaciones/actuaciones.module';
 
 
 
@@ -25,6 +26,7 @@ import { LoginService } from './services/auth/login.service';
     // Añadimos el HttpClient y el Forms
     HttpClientModule,
     FormsModule,
+    ActuacionesModule
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptorService,multi:true},

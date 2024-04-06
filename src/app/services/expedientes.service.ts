@@ -22,49 +22,49 @@ export class ExpedientesService {
 
     // Solo agregamos los parámetros con valor
     if (codigo !== undefined) {
-      params['codigo'] = codigo.toString(); // Convertir a string
+      params['codigo'] = codigo.toString() // Convertir a string
     }
     if (responsable !== undefined) {
-      params['responsable'] = responsable.toString(); // Convertir a string
+      params['responsable'] = responsable.toString() // Convertir a string
     }
     if (fecha !== undefined) {
-      params['fecha'] = fecha.toString(); // Convertir a string
+      params['fecha'] = fecha.toString() // Convertir a string
     }
     if (estado !== undefined) {
-      params['estado'] = estado.toString(); // Convertir a string
+      params['estado'] = estado.toString() // Convertir a string
     }
     if (opciones !== undefined) {
-      params['opciones'] = opciones.toString(); // Convertir a string
+      params['opciones'] = opciones.toString() // Convertir a string
     }
     if (descripcion !== undefined) {
-      params['descripcion'] = descripcion.toString(); // Convertir a string
+      params['descripcion'] = descripcion.toString() // Convertir a string
     }
     if (tipoId !== undefined) {
-      params['tipoId'] = tipoId.toString(); // Convertir a string
+      params['tipoId'] = tipoId.toString() // Convertir a string
     }
 
-  // Construimos la URL con los parámetros
-  const url = `${this.baseURL}/consultar?${new URLSearchParams(params).toString()}`;
+    // Construimos la URL con los parámetros
+    const url = `${this.baseURL}/consultar?${new URLSearchParams(params).toString()}`
 
-  // Enviamos la solicitud
-  return this.http.get<Expedientes[]>(url);
-}
+    // Enviamos la solicitud
+    return this.http.get<Expedientes[]>(url)
+  }
 
   // Insertar Expedientes
   // @PostMapping("/insertar/{codigo}/{responsable}/{fecha}/{opciones}/{descripcion}/{tipoId}")
   insertarExpediente(codigo: string, responsable: string, fecha: string, opciones: string, descripcion:string, tipoId: number): Observable<Expedientes> {
-    const url = `${this.baseURL}/insertar/${codigo}/${responsable}/${fecha}/${opciones}/${descripcion}/${tipoId}`;
+    const url = `${this.baseURL}/insertar/${codigo}/${responsable}/${fecha}/${opciones}/${descripcion}/${tipoId}`
 
     // Realizar la solicitud POST
-    return this.http.post<Expedientes>(url, {});
-}
+    return this.http.post<Expedientes>(url, {})
+  }
 
   //Actualizar Expedientes
   // @PutMapping("/actualizar/{id}/{codigo}/{responsable}/{fecha}/{estado}/{opciones}/{descripcion}/{tipoId}")
   actualizarExpediente(id: number, codigo: string, responsable: string, fecha: string, estado: Estado, opciones: string, descripcion: string, tipoId: number): Observable<Expedientes> {
     const estadoStr = estado.toString(); // Convertir el objeto estado a su representación de cadena adecuada
-    const url = `${this.baseURL}/actualizar/${id}/${codigo}/${responsable}/${fecha}/${estadoStr}/${opciones}/${descripcion}/${tipoId}`;
-    return this.http.put<Expedientes>(url, {});
+    const url = `${this.baseURL}/actualizar/${id}/${codigo}/${responsable}/${fecha}/${estadoStr}/${opciones}/${descripcion}/${tipoId}`
+    return this.http.put<Expedientes>(url, {})
   }
 
   // Borrar Expediente

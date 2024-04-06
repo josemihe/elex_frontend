@@ -3,7 +3,7 @@ import { Estado, Expedientes } from '../../models/expedientes.model';
 import { ExpedientesService } from '../../services/expedientes.service';
 import { TiposService } from '../../services/tipos.service';
 import { Tipos } from '../../models/tipos.model';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-ExpedientesModule',
