@@ -4,7 +4,7 @@ export interface Expedientes {
     id: number;
     codigo: string;
     responsable: string;
-    fecha: Date;
+    fecha: string;
     estado: Estado;
     opciones: string;
     descripcion: string;
@@ -14,6 +14,6 @@ export interface Expedientes {
   
   export enum Estado {
     Pendiente = 'Pendiente',
-    EnCurso = 'En Curso',
-    Finalizado = 'Finalizado'
+    Erroneo = 'Erróneo',
+    Enviado = 'Enviado',
   }

@@ -1,41 +1,80 @@
 <h2 class="text-center">Expedientes</h2>
 
 <section class="container mt-3">
-  <form (ngSubmit)="expedienteParaActualizar ? actualizarExpediente() : insertarExpediente()">
+  <form [formGroup]="expedienteForm" (ngSubmit)="expedienteParaActualizar ? actualizarExpediente() : insertarExpediente()">
     <section class="mb-3">
-      <label for="codigo" class="form-label">Codigo</label>
-      <input type="text" class="form-control" id="codigo" [(ngModel)]="codigo" name="codigo">
+        <label for="codigo" class="form-label">Codigo</label>
+        <input type="text" class="form-control" id="codigo" formControlName="codigo">
+        
+        <label for="responsable" class="form-label">Responsable</label>
+        <input type="text" class="form-control" id="responsable" formControlName="responsable">
+        
+        <label for="fecha" class="form-label">Fecha</label>
+        <input type="text" id="fecha" name="fecha" class="form-control" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" formControlName="fecha">
+        
+        <label for="estado" class="form-label">Estado</label>
+        <select id="estado" name="estado" class="form-control" formControlName="estado">
+            <option value="">Seleccione un estado...</option>
+            <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+        </select>
+        
+        <label for="opciones" class="form-label">Opciones</label>
+        <div class="form-check">
+          <label class="form-check-label" for="urgente">Urgente</label>
+          <input class="form-check-input" type="checkbox" id="urgente" formControlName="urgente">
+        </div>
+        <div class="form-check">
+          <label class="form-check-label" for="confidencial">Confidencial</label>
+          <input class="form-check-input" type="checkbox" id="confidencial" formControlName="confidencial">
+        </div>
+  
+        <label for="descripcion" class="form-label">Descripcion</label>
+        <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
+        
+        <label for="tipo" class="form-label">Tipo</label>
+        <select id="tipo" name="tipo" class="form-select" formControlName="tipoId" (change)="onChangeTipo($event)">
+            <option value="">Seleccionar tipo</option>
+            <option *ngFor="let tipo of tipos" [ngValue]="tipo.id.toString()">{{ tipo.materia }}</option>
+        </select>
+        
+        <button type="button" class="btn btn-primary" (click)="insertarExpediente()" *ngIf="!expedienteParaActualizar">Insertar</button>
+        <section *ngIf="expedienteParaActualizar">
+            <button type="submit" class="btn btn-warning">Actualizar</button>
+            <button type="button" class="btn btn-light" (click)="cancelarActualizacion()">Cancelar</button>
+        </section>
     </section>
-    <table class="table mt-3">
-      <thead>
+</form>
+
+
+  <table class="table mt-3">
+    <thead>
           <tr>
-              <th scope="col">ID</th>
-              <th scope="col">CODIGO</th>
-              <th scope="col">RESPONSABLE</th>
-              <th scope="col">FECHA</th>
-              <th scope="col">ESTADO</th>
-              <th scope="col">OPCIONES</th>
-              <th scope="col">DESCRIPCION</th>
-              <th scope="col">TIPO</th>
-          </tr>
-      </thead>
-      <!-- Modifico la tabla para añadir los botones adicionales -->
-      <tbody>
-          <tr *ngFor="let expediente of expedientes">
-              <td>{{ expediente.id }}</td>
-              <td>{{ expediente.codigo }}</td>
-              <td>{{ expediente.responsable }}</td>
-              <td>{{ expediente.fecha }}</td>
-              <td>{{ expediente.estado }}</td>
-              <td>{{ expediente.opciones }}</td>
-              <td>{{ expediente.descripcion }}</td>
-              <td>{{ expediente.tipo.materia }}</td>
-              <td>
-                  <button class="btn btn-warning btn-sm" (click)="prepararActualizacion(expediente)">Actualizar</button>
-                  <button class="btn btn-danger btn-sm" (click)="borrarExpediente(expediente.id)">Borrar</button>
-              </td>
-          </tr>
-      </tbody>
+            <th scope="col">ID</th>
+            <th scope="col">CODIGO</th>
+            <th scope="col">RESPONSABLE</th>
+            <th scope="col">FECHA</th>
+            <th scope="col">ESTADO</th>
+            <th scope="col">OPCIONES</th>
+            <th scope="col">DESCRIPCION</th>
+            <th scope="col">TIPO</th>
+        </tr>
+    </thead>
+    <!-- Modifico la tabla para añadir los botones adicionales -->
+    <tbody>
+      <tr *ngFor="let expediente of expedientes">
+          <td>{{ expediente.id }}</td>
+          <td>{{ expediente.codigo }}</td>
+          <td>{{ expediente.responsable }}</td>
+          <td>{{ expediente.fecha }}</td>
+          <td>{{ expediente.estado }}</td>
+          <td>{{ expediente.opciones }}</td>
+          <td>{{ expediente.descripcion }}</td>
+          <td>{{ expediente.tipo.materia }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="prepararActualizacion(expediente)">Actualizar</button>
+            <button class="btn btn-danger btn-sm" (click)="borrarExpediente(expediente.id)">Borrar</button>
+          </td>
+      </tr>
+    </tbody>
   </table>
-  </form>
 </section>
