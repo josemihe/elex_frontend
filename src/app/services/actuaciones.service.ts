@@ -3,24 +3,23 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { Actuaciones } from '../models/actuaciones.model';
-import { Expedientes } from '../models/expedientes.model';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ActuacionesService {
-  private baseURL = `${environment.apiURL}/actuaciones`;
+  private baseURL = `${environment.apiURL}/actuaciones`
 
   constructor(private http: HttpClient) { }
   consultarActuaciones(expedienteId: number) {
-    let url = `${this.baseURL}/consultar`;
+    let url = `${this.baseURL}/consultar`
     
     if (expedienteId !== undefined) {
-      url += `/${expedienteId}`;
+      url += `/${expedienteId}`
     }
     
-    return this.http.get<Actuaciones[]>(url);
+    return this.http.get<Actuaciones[]>(url)
   }
   
   insertarActuacion(descripcion: string, fecha: string, expedienteId: number): Observable<Actuaciones> {

@@ -74,6 +74,7 @@
             <button class="btn btn-warning btn-sm" (click)="prepararActualizacion(expediente)">Actualizar</button>
             <button class="btn btn-danger btn-sm" (click)="borrarExpediente(expediente.id)">Borrar</button>
             <button [routerLinkActive]="['active']" [routerLink]="'/actuaciones/' + expediente.id">Actuaciones</button>
+            <button [routerLinkActive]="['active']" [routerLink]="'/documentos/' + expediente.id">Documentos</button>
           </td>
       </tr>
     </tbody>

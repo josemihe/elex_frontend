@@ -13,6 +13,7 @@ import { JwtInterceptorService } from './services/auth/jwt-interceptor.service';
 import { ErrorInterceptorService } from './services/auth/error-interceptor.service';
 import { LoginService } from './services/auth/login.service'; 
 import { ActuacionesModule } from './modules/actuaciones/actuaciones.module';
+import { DocumentosModule } from './modules/documentos/documentos.module';
 
 
 
@@ -26,7 +27,8 @@ import { ActuacionesModule } from './modules/actuaciones/actuaciones.module';
     // Añadimos el HttpClient y el Forms
     HttpClientModule,
     FormsModule,
-    ActuacionesModule
+    ActuacionesModule,
+    DocumentosModule,
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptorService,multi:true},

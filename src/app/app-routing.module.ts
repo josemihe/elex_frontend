@@ -25,7 +25,12 @@ const routes: Routes = [
     path: 'actuaciones',
     loadChildren: () => import('./modules/actuaciones/actuaciones.module').then(m => m.ActuacionesModule),
     canActivate: [canActivateGuard],
-  }
+  },
+  {
+    path: 'documentos',
+    loadChildren: () => import('./modules/documentos/documentos.module').then(m => m.DocumentosModule),
+    canActivate: [canActivateGuard],
+  },
 ];
 
 @NgModule({

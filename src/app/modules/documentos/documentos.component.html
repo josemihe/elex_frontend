@@ -1,0 +1,51 @@
+<h2 class="text-center">Documentos</h2>
+
+<section class="container mt-3">
+  <form [formGroup]="documentoForm" (ngSubmit)="documentoParaActualizar ? actualizarDocumento() : insertarDocumento()">
+    <section class="mb-3">
+      <label for="tasa" class="form-label">TASA</label>
+      <input type="number" class="form-control" id="tasa" formControlName="tasa" step="0.01">
+        
+      <label for="pagado" class="form-label">Pagado</label>
+      <input type="checkbox" class="form-check-input" id="pagado" formControlName="pagado">
+        
+      <label for="expedienteId" class="form-label">ID Expediente</label>
+      <input type="text" class="form-control" id="expedienteId" formControlName="expedienteId">
+      
+      <label for="archivo" class="form-label">Archivo a subir</label>
+      <input type="file" name="archivo" id="archivo" formControlName="archivo" class="form-control" accept=".pdf" (change)="onFileSelected($event)"/>
+      
+      <button type="submit" class="btn btn-primary" *ngIf="!documentoParaActualizar">Insertar</button>
+      <section *ngIf="documentoParaActualizar">
+        <button type="submit" class="btn btn-warning">Actualizar</button>
+        <button type="button" class="btn btn-light" (click)="cancelarActualizacion()">Cancelar</button>
+      </section>
+    </section>
+  </form>
+
+
+  <table class="table mt-3">
+    <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">TASA</th>
+            <th scope="col">PAGADO</th>
+            <th scope="col">ID EXPEDIENTE</th>
+        </tr>
+    </thead>
+    <!-- Modifico la tabla para añadir los botones adicionales -->
+    <tbody>
+      <tr *ngFor="let documento of documentos">
+          <td>{{ documento.id }}</td>
+          <td>{{ documento.tasa }}</td>
+          <td>{{ documento.pagado }}</td>
+          <td>{{ documento.expediente.id }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="prepararActualizacion(documento)">Actualizar</button>
+            <button class="btn btn-danger btn-sm" (click)="borrarDocumento(documento.id)">Borrar</button>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+
+</section>
