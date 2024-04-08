@@ -1,0 +1,21 @@
+.enlace {
+    text-decoration: none;
+    color: black;
+}
+  
+.enlace:hover {
+    color: #800000; 
+}
+
+footer {
+    background-color: #102136;
+    height: 300px;
+}
+
+.cabezales {
+    color: white;
+}
+
+.enlaces-footer{
+    color:white
+}

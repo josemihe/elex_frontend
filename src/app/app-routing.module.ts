@@ -5,6 +5,10 @@ import { canActivateGuard } from './services/auth/authGuard.service';
 const routes: Routes = [
 
   {
+    path: '',
+    loadChildren: () => import('./modules/indice/indice.module').then(m => m.IndiceModule),
+  },
+  {
     path: 'tipos-expediente',
     loadChildren: () => import('./modules/tipos-expediente-module/tipos.module').then(m => m.TiposExpedienteModule),
     canActivate: [canActivateGuard],

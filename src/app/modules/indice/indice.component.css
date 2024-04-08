@@ -1,0 +1,5 @@
+main {
+    overflow-y: auto; /* Permite el scrolling vertical si el contenido excede el alto máximo */
+    margin-bottom: 300px;
+  }
+  

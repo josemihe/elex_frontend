@@ -16,16 +16,18 @@
   }
 </style>
 
-<header class="header m-4" *ngIf="!isLoginPage">
-  <nav class="nav container d-flex justify-content-between">  
-    <a routerLink="/">Volver al inicio</a>
-    <a routerLink="/tipos-expediente">Ir a Tipos de Expediente</a>
-    <a routerLink="/expedientes">Ir a listado de Expedientes</a>
+<header class="header m-4 sticky-top bg-white" *ngIf="!isLoginPage">
+  <nav class="nav container d-flex justify-content-between">
+    <a routerLink="/" class="enlace">
+      <img src="../assets/tramitador-expedientes-juridicos-elex.png" class="img-fluid" style="max-width: 125px; height: auto;"> 
+    </a>
+    <a routerLink="/tipos-expediente" class="enlace">Ir a Tipos de Expediente</a>
+    <a routerLink="/expedientes" class="enlace">Ir a listado de Expedientes</a>
     <span *ngIf="(loginService.userLoginOn | async); else loginLink">
-      <button (click)="logout()">Cerrar Sesión</button>
+      <button class="btn btn-danger" (click)="logout()">Cerrar Sesión</button>
     </span>
     <ng-template #loginLink>
-      <a routerLink="/login">Iniciar Sesión</a>
+      <a routerLink="/login" class="enlace">Iniciar Sesión</a>
     </ng-template>
   </nav>
 </header>
@@ -34,4 +36,33 @@
   <router-outlet></router-outlet>
 </main>
 
-<router-outlet />
+<footer class="container-fluid d-flex flex-column justify-content-center align-items-center pt-4 fixed-bottom">
+  <p class="text-white">Esta herramienta ha sido desarrollada por Soltel Group, en su división de LegalTech.</p>
+  <div class="row pt-5 justify-content-center align-items-center">
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Sobre nosotros</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Sobre ELEX</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Nuestros Clientes</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Nuestros Partners</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Prueba eLex</a></li>
+      </ul>
+    </div>
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Comunicación</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Suscríbete a la Newsletter</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Contacto y sugerencias</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Prensa</a></li>
+      </ul>
+    </div>
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Legal</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Política de privacidad</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Política de cookies</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Aviso legal y términos de uso</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

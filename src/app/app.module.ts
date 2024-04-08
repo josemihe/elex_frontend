@@ -14,6 +14,7 @@ import { ErrorInterceptorService } from './services/auth/error-interceptor.servi
 import { LoginService } from './services/auth/login.service'; 
 import { ActuacionesModule } from './modules/actuaciones/actuaciones.module';
 import { DocumentosModule } from './modules/documentos/documentos.module';
+import { IndiceModule } from './modules/indice/indice.module';
 
 
 
@@ -29,6 +30,7 @@ import { DocumentosModule } from './modules/documentos/documentos.module';
     FormsModule,
     ActuacionesModule,
     DocumentosModule,
+    IndiceModule,
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptorService,multi:true},
