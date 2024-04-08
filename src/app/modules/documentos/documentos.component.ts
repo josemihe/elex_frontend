@@ -15,7 +15,8 @@ export class DocumentosComponent implements OnInit {
 
   documentoForm: FormGroup = new FormGroup({})
   expediente: Expedientes[] = []
-  
+
+  insertionCollapsed: boolean = false;  
 
   mensaje: string = ""
 
@@ -72,6 +73,12 @@ export class DocumentosComponent implements OnInit {
       if (resultado) {
         this.id = resultado.id
         this.mensaje = "Actuación insertada"
+        this.documentoForm.patchValue({
+          tasa: '',
+          pagado: false,
+          pdf_base64: '',
+          archivo: null,
+        })
         if (this.expedienteId !== undefined){
           this.guardarFicheroEnDocumento()
           this.cargarDocumentos(this.expedienteId)
@@ -111,7 +118,12 @@ export class DocumentosComponent implements OnInit {
         this.mensaje = "Documento actualizado"
         this.expedienteId = formData.expedienteId
         this.documentoParaActualizar = null
-        this.documentoForm.reset()
+        this.documentoForm.patchValue({
+          tasa: '',
+          pagado: false,
+          pdf_base64: '',
+          archivo: null,
+        })
         if(this.expedienteId !== undefined) {
           this.guardarFicheroEnDocumento()
           this.cargarDocumentos(this.expedienteId)
@@ -151,7 +163,11 @@ export class DocumentosComponent implements OnInit {
     this.servicio.actualizarPdf(this.pdf_base64, this.id).subscribe( () => {
       this.mensaje = "PDF insertado"
     })
-}
+  }
+
+  toggleInsertionCollapse(): void {
+    this.insertionCollapsed = !this.insertionCollapsed;
+  }
 
 
   onFileSelected(event: any) {

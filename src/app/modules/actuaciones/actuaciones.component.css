@@ -1,0 +1,17 @@
+main{
+    overflow-y: auto;
+    margin-bottom: 300px;
+}
+
+footer {
+    background-color: #102136;
+    height: 300px;
+}
+
+.cabezales {
+    color: white;
+}
+
+.enlaces-footer{
+    color:white
+}

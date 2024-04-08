@@ -1,5 +1,13 @@
-<form [formGroup]="loginForm">
-    <p class="text-danger">{{loginError}}</p>
+
+
+<main class="container mt-3 text-center">
+  <div class="row">
+    <div class="col">
+      <img src="../assets/tramitador-expedientes-juridicos-elex.png" class="img-fluid" style="max-width: 200px; height: auto;" />
+    </div>
+  </div>
+  <form [formGroup]="loginForm" class="login-form">
+    <p class="text-danger">{{ loginError }}</p>
     <div class="mb-3">
       <label for="username" class="form-label">Nombre de Usuario</label>
       <input formControlName="username" type="text" class="form-control" id="username">  
@@ -7,12 +15,45 @@
     <div class="mb-3">
       <label for="password" class="form-label">Contraseña</label>
       <input formControlName="password" type="password" class="form-control" id="password">
-        <div *ngIf="password.invalid && (password.dirty || password.touched)"
-            class="text-danger">
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
             <div *ngIf="password.errors?.['required']">
                 Introduzca la contraseña
             </div>
         </div> 
     </div>
     <button type="submit" (click)="login()" class="btn btn-primary">Iniciar Sesión</button>
-</form>
+  </form>
+</main>
+
+
+
+<footer class="container-fluid d-flex flex-column justify-content-center align-items-center pt-4 fixed-bottom">
+  <p class="text-white">Esta herramienta ha sido desarrollada por Soltel Group, en su división de LegalTech.</p>
+  <div class="row pt-5 justify-content-center align-items-center">
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Sobre nosotros</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Sobre ELEX</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Nuestros Clientes</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Nuestros Partners</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Prueba eLex</a></li>
+      </ul>
+    </div>
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Comunicación</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Suscríbete a la Newsletter</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Contacto y sugerencias</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Prensa</a></li>
+      </ul>
+    </div>
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Legal</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Política de privacidad</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Política de cookies</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Aviso legal y términos de uso</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

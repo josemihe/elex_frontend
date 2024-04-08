@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Estado, Expedientes } from '../models/expedientes.model';
 import { environment } from '../../environments/environment.development';
@@ -16,7 +16,7 @@ export class ExpedientesService {
 
   //Consultar Expedientes
   // @GetMapping("/consultar")
-  consultarExpedientes(codigo?: string, responsable?: string, fecha?: string, estado?: Estado, opciones?: string, descripcion?: string, tipoId?: string): Observable<Expedientes[]> {
+  /*consultarExpedientes(codigo?: string, responsable?: string, fecha?: string, estado?: Estado, opciones?: string, descripcion?: string, tipoId?: string): Observable<Expedientes[]> {
 
     const params: Record<string, string> = {}; // Cambiado el tipo de params
 
@@ -48,7 +48,7 @@ export class ExpedientesService {
 
     // Enviamos la solicitud
     return this.http.get<Expedientes[]>(url)
-  }
+  }*/
 
   // Insertar Expedientes
   // @PostMapping("/insertar/{codigo}/{responsable}/{fecha}/{opciones}/{descripcion}/{tipoId}")
@@ -58,6 +58,35 @@ export class ExpedientesService {
     // Realizar la solicitud POST
     return this.http.post<Expedientes>(url, {})
   }
+
+  consultarExpedientes(codigo?: string, responsable?: string, fecha?: string, estado?: string, opciones?: string, descripcion?: string, tipoId?: string): Observable<Expedientes[]> {
+    let params = new HttpParams();
+
+    if (codigo) {
+      params = params.set('codigo', codigo);
+    }
+    if (responsable) {
+      params = params.set('responsable', responsable);
+    }
+    if (fecha) {
+      params = params.set('fecha', fecha);
+    }
+    if (estado) {
+      params = params.set('estado', estado);
+    }
+    if (opciones) {
+      params = params.set('opciones', opciones);
+    }
+    if (descripcion) {
+      params = params.set('descripcion', descripcion);
+    }
+    if (tipoId) {
+      params = params.set('tipoId', tipoId);
+    }
+
+    return this.http.get<Expedientes[]>(`${this.baseURL}/consultar`, { params });
+  }
+
 
   //Actualizar Expedientes
   // @PutMapping("/actualizar/{id}/{codigo}/{responsable}/{fecha}/{estado}/{opciones}/{descripcion}/{tipoId}")

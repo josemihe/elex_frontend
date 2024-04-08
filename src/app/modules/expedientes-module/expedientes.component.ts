@@ -14,6 +14,8 @@ export class ExpedientesComponent implements OnInit {
 
   expedienteForm: FormGroup = new FormGroup({});
 
+  formularioBusqueda: FormGroup = new FormGroup([]);
+
   expedientes: Expedientes[] = []
   tipos: Tipos[] = []
   mensaje: string = ""
@@ -24,6 +26,9 @@ export class ExpedientesComponent implements OnInit {
   opciones: string = "";
   descripcion: string = ""
   tipoId: string = ""
+
+  insertionCollapsed: boolean = false;
+  searchCollapsed: boolean = true;
 
   estados: Estado[] = [
     Estado.Pendiente,
@@ -80,8 +85,6 @@ export class ExpedientesComponent implements OnInit {
       return '';
     }
   }
-
- 
 
   expedienteParaActualizar: Expedientes | null = null;
 
@@ -164,20 +167,32 @@ export class ExpedientesComponent implements OnInit {
       urgente: [false], 
       confidencial: [false] 
     });
+
+    this.formularioBusqueda = this.formBuilder.group({
+      codigo: [''],
+      responsable: [''],
+      fecha: [''],
+      estado: ['']
+    });
+
+
     this.cargarExpedientes()
     this.cargarTipos()
   }
 
-  // Method to submit the form
-  onSubmit() {
-    if (this.expedienteForm.valid) {
-      // Handle form submission
-      if (this.expedienteParaActualizar) {
-        this.actualizarExpediente();
-      } else {
-        this.insertarExpediente();
-      }
-    }
+  buscarExpedientes(): void {
+    const valores = this.formularioBusqueda.value;
+  
+    // Llamar a la función cargarExpedientes con todos los parámetros del formulario
+    this.cargarExpedientes(valores.codigo, valores.responsable, valores.fecha, valores.estado);
+  }
+
+  toggleInsertionCollapse(): void {
+    this.insertionCollapsed = !this.insertionCollapsed;
+  }
+
+  toggleSearchCollapse(): void {
+    this.searchCollapsed = !this.searchCollapsed;
   }
 
 }

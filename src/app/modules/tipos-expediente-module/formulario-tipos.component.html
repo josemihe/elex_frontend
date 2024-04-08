@@ -4,52 +4,86 @@
      en app.module.ts
 -->
 
-<h2 class="text-center">Tipos Expediente</h2>
-<!-- src/app/formularios-tipos/formularios-tipos.component.html -->
-
-<!--
-    // ----------------------------------------
-    // NUEVO! ACTUALIZAR Y BORRAR
-    // Paso3: Modificar vista (componente)
-    // ----------------------------------------
--->
-
-<section class="container mt-3">
-    <!-- Ahora el formulario vale tanto para INSERTAR como para ACTUALIZAR -->
-    <form (ngSubmit)="tipoParaActualizar ? actualizarTipoFormulario() : insertarTipo()">
-        <section class="mb-3">
-            <label for="materia" class="form-label">Materia</label>
-            <input type="text" class="form-control" id="materia" [(ngModel)]="materia" name="materia">
-        </section>
-        <!-- Botón para insertar un nuevo tipo -->
-        <button type="button" class="btn btn-primary" (click)="insertarTipo()"
-            *ngIf="!tipoParaActualizar">Insertar
-        </button>
-
-        <!-- Botones para actualizar un tipo existente -->
-        <section *ngIf="tipoParaActualizar">
-            <button type="button" class="btn btn-warning" (click)="actualizarTipoFormulario()">Actualizar</button>
-            <button type="button" class="btn btn-light" (click)="cancelarActualizacion()">Cancelar</button>
-        </section>
-    </form>
-
+<main class="container mt-3">
+    <h2 class="text-center">Tipos Expediente</h2>
+  
+    <!-- Formulario de Inserción -->
+    <div class="accordion mt-3" id="accordionInsertion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="insertionHeading">
+          <button class="accordion-button collapsed" type="button" (click)="toggleInsertionCollapse()" [attr.aria-expanded]="insertionCollapsed ? 'false' : 'true'" aria-controls="collapseInsertion">
+            Formulario de Inserción
+          </button>
+        </h2>
+        <div id="collapseInsertion" class="accordion-collapse collapse" [ngClass]="{'show': !insertionCollapsed}" aria-labelledby="insertionHeading">
+          <div class="accordion-body">
+            <form (ngSubmit)="tipoParaActualizar ? actualizarTipoFormulario() : insertarTipo()">
+              <div class="mb-3">
+                <label for="materia" class="form-label">Materia</label>
+                <input type="text" class="form-control" id="materia" [(ngModel)]="materia" name="materia">
+              </div>
+              <div class="mt-3">
+                <button type="button" class="btn btn-primary" (click)="insertarTipo()" *ngIf="!tipoParaActualizar">Insertar</button>
+                <div *ngIf="tipoParaActualizar" class="mt-3">
+                  <button type="button" class="btn btn-warning" (click)="actualizarTipoFormulario()">Actualizar</button>
+                  <button type="button" class="btn btn-light" (click)="cancelarActualizacion()">Cancelar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Tabla de Tipos de Expediente -->
     <table class="table mt-3">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Materia</th>
-            </tr>
-        </thead>
-        <!-- Modifico la tabla para añadir los botones adicionales -->
-        <tbody>
-            <tr *ngFor="let tipo of tipos">
-                <td>{{ tipo.id }}</td>
-                <td>{{ tipo.materia }}</td>
-                <td>
-                    <button class="btn btn-warning btn-sm" (click)="prepararActualizacion(tipo)">Actualizar</button>
-                    <button class="btn btn-danger btn-sm" (click)="borrarTipo(tipo.id)">Borrar</button>
-                </td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Materia</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tipo of tipos">
+          <td>{{ tipo.id }}</td>
+          <td>{{ tipo.materia }}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" (click)="prepararActualizacion(tipo)">Actualizar</button>
+            <button class="btn btn-danger btn-sm" (click)="borrarTipo(tipo.id)">Borrar</button>
+          </td>
+        </tr>
+      </tbody>
     </table>
-</section>
+</main>
+
+<footer class="container-fluid d-flex flex-column justify-content-center align-items-center pt-4 fixed-bottom">
+    <p class="text-white">Esta herramienta ha sido desarrollada por Soltel Group, en su división de LegalTech.</p>
+    <div class="row pt-5 justify-content-center align-items-center">
+      <div class="col-md-4 mb-4">
+        <h5 class="cabezales fw-bold">Sobre nosotros</h5>
+        <ul class="list-unstyled pt-2">
+          <li><a class="enlaces-footer text-decoration-none" href="#">Sobre ELEX</a></li>
+          <li><a class="enlaces-footer text-decoration-none" href="#">Nuestros Clientes</a></li>
+          <li><a class="enlaces-footer text-decoration-none" href="#">Nuestros Partners</a></li>
+          <li><a class="enlaces-footer text-decoration-none" href="#">Prueba eLex</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5 class="cabezales fw-bold">Comunicación</h5>
+        <ul class="list-unstyled pt-2">
+          <li><a class="enlaces-footer text-decoration-none" href="#">Suscríbete a la Newsletter</a></li>
+          <li><a class="enlaces-footer text-decoration-none" href="#">Contacto y sugerencias</a></li>
+          <li><a class="enlaces-footer text-decoration-none" href="#">Prensa</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5 class="cabezales fw-bold">Legal</h5>
+        <ul class="list-unstyled pt-2">
+          <li><a class="enlaces-footer text-decoration-none" href="#">Política de privacidad</a></li>
+          <li><a class="enlaces-footer text-decoration-none" href="#">Política de cookies</a></li>
+          <li><a class="enlaces-footer text-decoration-none" href="#">Aviso legal y términos de uso</a></li>
+        </ul>
+      </div>
+    </div>
+</footer>

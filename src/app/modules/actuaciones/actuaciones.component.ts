@@ -15,6 +15,8 @@ export class ActuacionesComponent implements OnInit {
   actuacionForm: FormGroup = new FormGroup({})
   expediente: Expedientes[] = []
 
+  insertionCollapsed: boolean = false;
+
   mensaje: string = ""
 
   actuaciones: Actuaciones[] = []
@@ -71,6 +73,12 @@ export class ActuacionesComponent implements OnInit {
       if (resultado) {
         this.expedienteId = formData.expedienteId
         this.mensaje = "Actuación insertada"
+        this.actuacionForm.patchValue({
+          descripcion: '',
+          finalizado: 0,
+          fecha: '',
+          expedienteId: this.expedienteId,
+        })
         if (this.expedienteId !== undefined) {
           this.cargarActuaciones(this.expedienteId)
         }
@@ -104,7 +112,12 @@ export class ActuacionesComponent implements OnInit {
         this.mensaje = "Actuación actualizada"
         this.expedienteId = formData.expedienteId
         this.actuacionParaActualizar = null;
-        this.actuacionForm.reset() // Restablecer el formulario
+        this.actuacionForm.patchValue({
+          descripcion: '',
+          finalizado: 0,
+          fecha: '',
+          expedienteId: this.expedienteId,
+        })
         if (this.expedienteId !== undefined) {
           this.cargarActuaciones(this.expedienteId)
         }
@@ -126,6 +139,10 @@ export class ActuacionesComponent implements OnInit {
   cancelarActualizacion(): void {
     this.actuacionParaActualizar = null
     this.actuacionForm.reset()
+  }
+
+  toggleInsertionCollapse(): void {
+    this.insertionCollapsed = !this.insertionCollapsed;
   }
 
   borrarActuacion(id:number): void {

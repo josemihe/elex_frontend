@@ -1,67 +1,116 @@
-<h2 class="text-center">Expedientes</h2>
+<main class="container">
+  <h2 class="text-center">Expedientes</h2>
 
-<section class="container mt-3">
-  <form [formGroup]="expedienteForm" (ngSubmit)="expedienteParaActualizar ? actualizarExpediente() : insertarExpediente()">
-    <section class="mb-3">
-        <label for="codigo" class="form-label">Codigo</label>
-        <input type="text" class="form-control" id="codigo" formControlName="codigo">
-        
-        <label for="responsable" class="form-label">Responsable</label>
-        <input type="text" class="form-control" id="responsable" formControlName="responsable">
-        
-        <label for="fecha" class="form-label">Fecha</label>
-        <input type="text" id="fecha" name="fecha" class="form-control" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" formControlName="fecha">
-        
-        <label for="estado" class="form-label">Estado</label>
-        <select id="estado" name="estado" class="form-control" formControlName="estado">
-            <option value="">Seleccione un estado...</option>
-            <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
-        </select>
-        
-        <label for="opciones" class="form-label">Opciones</label>
-        <div class="form-check">
-          <label class="form-check-label" for="urgente">Urgente</label>
-          <input class="form-check-input" type="checkbox" id="urgente" formControlName="urgente">
+  <section class="mt-3">
+
+    <div class="accordion" id="accordionInsertion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="insertionHeading">
+          <button class="accordion-button collapsed" type="button" (click)="toggleInsertionCollapse()" [attr.aria-expanded]="insertionCollapsed ? 'false' : 'true'" aria-controls="collapseInsertion">
+            Formulario de Inserción
+          </button>
+        </h2>
+        <div id="collapseInsertion" class="accordion-collapse" [ngClass]="{'collapse': insertionCollapsed, 'show': !insertionCollapsed}" aria-labelledby="insertionHeading">
+          <div class="accordion-body">
+            <form [formGroup]="expedienteForm" (ngSubmit)="expedienteParaActualizar ? actualizarExpediente() : insertarExpediente()">
+              <div class="mb-3">
+                <label for="codigo" class="form-label">Codigo</label>
+                <input type="text" class="form-control" id="codigo" formControlName="codigo">
+                
+                <label for="responsable" class="form-label">Responsable</label>
+                <input type="text" class="form-control" id="responsable" formControlName="responsable">
+                
+                <label for="fecha" class="form-label">Fecha</label>
+                <input type="text" id="fecha" name="fecha" class="form-control" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" formControlName="fecha">
+                
+                <label for="estado" class="form-label">Estado</label>
+                <select id="estado" name="estado" class="form-control" formControlName="estado">
+                    <option value="">Seleccione un estado...</option>
+                    <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+                </select>
+                
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="urgente" formControlName="urgente">
+                  <label class="form-check-label" for="urgente">Urgente</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="confidencial" formControlName="confidencial">
+                  <label class="form-check-label" for="confidencial">Confidencial</label>
+                </div>
+          
+                <label for="descripcion" class="form-label">Descripcion</label>
+                <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
+                
+                <label for="tipo" class="form-label">Tipo</label>
+                <select id="tipo" name="tipo" class="form-select" formControlName="tipoId" (change)="onChangeTipo($event)">
+                    <option value="">Seleccionar tipo</option>
+                    <option *ngFor="let tipo of tipos" [ngValue]="tipo.id.toString()">{{ tipo.materia }}</option>
+                </select>
+                
+                <div class="mt-3">
+                  <button type="button" class="btn btn-primary" (click)="insertarExpediente()" *ngIf="!expedienteParaActualizar">Insertar</button>
+                  <div *ngIf="expedienteParaActualizar" class="mt-3">
+                    <button type="submit" class="btn btn-warning">Actualizar</button>
+                    <button type="button" class="btn btn-light" (click)="cancelarActualizacion()">Cancelar</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-        <div class="form-check">
-          <label class="form-check-label" for="confidencial">Confidencial</label>
-          <input class="form-check-input" type="checkbox" id="confidencial" formControlName="confidencial">
+      </div>
+    </div>
+    
+    <div class="accordion mt-3" id="accordionSearch">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="searchHeading">
+          <button class="accordion-button collapsed" type="button" (click)="toggleSearchCollapse()" [attr.aria-expanded]="searchCollapsed ? 'false' : 'true'" aria-controls="collapseSearch">
+            Formulario de Búsqueda
+          </button>
+        </h2>
+        <div id="collapseSearch" class="accordion-collapse" [ngClass]="{'collapse': searchCollapsed, 'show': !searchCollapsed}" aria-labelledby="searchHeading">
+          <div class="accordion-body">
+            <form [formGroup]="formularioBusqueda" (ngSubmit)="buscarExpedientes()" class="mt-3">
+              <div class="mb-3">
+                <label for="codigo" class="form-label">Código:</label>
+                <input type="text" id="codigo" formControlName="codigo" class="form-control">
+                
+                <label for="responsable" class="form-label">Responsable:</label>
+                <input type="text" id="responsable" formControlName="responsable" class="form-control">
+                
+                <label for="fecha" class="form-label">Fecha:</label>
+                <input type="text" id="fecha" formControlName="fecha" pattern="\d{4}-\d{2}-\d{2}" class="form-control">
+                
+                <label for="estado" class="form-label">Estado:</label>
+                <select id="estado" name="estado" class="form-control" formControlName="estado">
+                  <option value="">Seleccione un estado...</option>
+                  <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+                </select>
+                
+                <button type="submit" class="btn btn-primary mt-3">Buscar</button>
+              </div>
+            </form>
+          </div>
         </div>
-  
-        <label for="descripcion" class="form-label">Descripcion</label>
-        <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
-        
-        <label for="tipo" class="form-label">Tipo</label>
-        <select id="tipo" name="tipo" class="form-select" formControlName="tipoId" (change)="onChangeTipo($event)">
-            <option value="">Seleccionar tipo</option>
-            <option *ngFor="let tipo of tipos" [ngValue]="tipo.id.toString()">{{ tipo.materia }}</option>
-        </select>
-        
-        <button type="button" class="btn btn-primary" (click)="insertarExpediente()" *ngIf="!expedienteParaActualizar">Insertar</button>
-        <section *ngIf="expedienteParaActualizar">
-            <button type="submit" class="btn btn-warning">Actualizar</button>
-            <button type="button" class="btn btn-light" (click)="cancelarActualizacion()">Cancelar</button>
-        </section>
-    </section>
-</form>
+      </div>
+    </div>
 
-
-  <table class="table mt-3">
-    <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">CODIGO</th>
-            <th scope="col">RESPONSABLE</th>
-            <th scope="col">FECHA</th>
-            <th scope="col">ESTADO</th>
-            <th scope="col">OPCIONES</th>
-            <th scope="col">DESCRIPCION</th>
-            <th scope="col">TIPO</th>
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">CODIGO</th>
+          <th scope="col">RESPONSABLE</th>
+          <th scope="col">FECHA</th>
+          <th scope="col">ESTADO</th>
+          <th scope="col">OPCIONES</th>
+          <th scope="col">DESCRIPCION</th>
+          <th scope="col">TIPO</th>
         </tr>
-    </thead>
-    <!-- Modifico la tabla para añadir los botones adicionales -->
-    <tbody>
-      <tr *ngFor="let expediente of expedientes">
+      </thead>
+      <!-- Modifico la tabla para añadir los botones adicionales -->
+      <tbody>
+        <tr *ngFor="let expediente of expedientes">
           <td>{{ expediente.id }}</td>
           <td>{{ expediente.codigo }}</td>
           <td>{{ expediente.responsable }}</td>
@@ -73,10 +122,42 @@
           <td>
             <button class="btn btn-warning btn-sm" (click)="prepararActualizacion(expediente)">Actualizar</button>
             <button class="btn btn-danger btn-sm" (click)="borrarExpediente(expediente.id)">Borrar</button>
-            <button [routerLinkActive]="['active']" [routerLink]="'/actuaciones/' + expediente.id">Actuaciones</button>
-            <button [routerLinkActive]="['active']" [routerLink]="'/documentos/' + expediente.id">Documentos</button>
+            <button [routerLinkActive]="['active']" [routerLink]="'/actuaciones/' + expediente.id" class="btn btn-info btn-sm">Actuaciones</button>
+            <button [routerLinkActive]="['active']" [routerLink]="'/documentos/' + expediente.id" class="btn btn-info btn-sm">Documentos</button>
           </td>
-      </tr>
-    </tbody>
-  </table>
-</section>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<footer class="container-fluid d-flex flex-column justify-content-center align-items-center pt-4 fixed-bottom">
+  <p class="text-white">Esta herramienta ha sido desarrollada por Soltel Group, en su división de LegalTech.</p>
+  <div class="row pt-5 justify-content-center align-items-center">
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Sobre nosotros</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Sobre ELEX</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Nuestros Clientes</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Nuestros Partners</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Prueba eLex</a></li>
+      </ul>
+    </div>
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Comunicación</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Suscríbete a la Newsletter</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Contacto y sugerencias</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Prensa</a></li>
+      </ul>
+    </div>
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Legal</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Política de privacidad</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Política de cookies</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Aviso legal y términos de uso</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

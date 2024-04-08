@@ -1,53 +1,104 @@
-<h2 class="text-center">Actuaciones</h2>
+<main class="container mt-3">
+  <h2 class="text-center">Actuaciones</h2>
 
-<section class="container mt-3">
-  <form [formGroup]="actuacionForm" (ngSubmit)="actuacionParaActualizar ? actualizarActuacion() : insertarActuacion()">
-    <section class="mb-3">
-        <label for="descripcion" class="form-label">Descripcion</label>
-        <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
-        
-        <label for="finalizado" class="form-label">Finalizado</label>
-        <input type="checkbox" class="form-check-input" id="finalizado" formControlName="finalizado">
-        
-        <label for="fecha" class="form-label">Fecha</label>
-        <input type="text" id="fecha" name="fecha" class="form-control" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" formControlName="fecha">
-        
-        <label for="expedienteId" class="form-label">ID Expediente</label>
-        <input type="text" class="form-control" id="expedienteId" formControlName="expedienteId" readonly>
-        
-        <button type="button" class="btn btn-primary" (click)="insertarActuacion()" *ngIf="!actuacionParaActualizar">Insertar</button>
-        <section *ngIf="actuacionParaActualizar">
-            <button type="submit" class="btn btn-warning">Actualizar</button>
-            <button type="button" class="btn btn-light" (click)="cancelarActualizacion()">Cancelar</button>
-        </section>
-    </section>
-</form>
+  <!-- Formulario de Inserción -->
+  <div class="accordion mt-3" id="accordionInsertion">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="insertionHeading">
+        <button class="accordion-button collapsed" type="button" (click)="toggleInsertionCollapse()" [attr.aria-expanded]="insertionCollapsed ? 'false' : 'true'" aria-controls="collapseInsertion">
+          Formulario de Inserción
+        </button>
+      </h2>
+      <div id="collapseInsertion" class="accordion-collapse collapse" [ngClass]="{'show': !insertionCollapsed}" aria-labelledby="insertionHeading">
+        <div class="accordion-body">
+          <form [formGroup]="actuacionForm" (ngSubmit)="actuacionParaActualizar ? actualizarActuacion() : insertarActuacion()">
+            <div class="mb-3">
+              <label for="descripcion" class="form-label">Descripción</label>
+              <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
+            </div>
+            <div class="mb-3">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="finalizado" formControlName="finalizado">
+                <label class="form-check-label" for="finalizado">Finalizado</label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="fecha" class="form-label">Fecha</label>
+              <input type="text" id="fecha" name="fecha" class="form-control" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" formControlName="fecha">
+            </div>
+            <div class="mb-3">
+              <label for="expedienteId" class="form-label">ID Expediente</label>
+              <input type="text" class="form-control" id="expedienteId" formControlName="expedienteId" readonly>
+            </div>
+            <div class="mt-3">
+              <button type="button" class="btn btn-primary" *ngIf="!actuacionParaActualizar" (click)="insertarActuacion()">Insertar</button>
+              <div *ngIf="actuacionParaActualizar" class="mt-3">
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                <button type="button" class="btn btn-light" (click)="cancelarActualizacion()">Cancelar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-
+  <!-- Tabla de Actuaciones -->
   <table class="table mt-3">
     <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">DESCRIPCION</th>
-            <th scope="col">FECHA</th>
-            <th scope="col">FINALIZADO</th>
-            <th scope="col">ID EXPEDIENTE</th>
-        </tr>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Finalizado</th>
+        <th scope="col">ID Expediente</th>
+        <th scope="col">Acciones</th>
+      </tr>
     </thead>
-    <!-- Modifico la tabla para añadir los botones adicionales -->
     <tbody>
       <tr *ngFor="let actuacion of actuaciones">
-          <td>{{ actuacion.id }}</td>
-          <td>{{ actuacion.descripcion }}</td>
-          <td>{{ actuacion.fecha }}</td>
-          <td>{{ actuacion.finalizado }}</td>
-          <td>{{ actuacion.expediente.id }}</td>
-          <td>
-            <button class="btn btn-warning btn-sm" (click)="prepararActualizacion(actuacion)">Actualizar</button>
-            <button class="btn btn-danger btn-sm" (click)="borrarActuacion(actuacion.id)">Borrar</button>
-          </td>
+        <td>{{ actuacion.id }}</td>
+        <td>{{ actuacion.descripcion }}</td>
+        <td>{{ actuacion.fecha }}</td>
+        <td>{{ actuacion.finalizado }}</td>
+        <td>{{ actuacion.expediente.id }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" (click)="prepararActualizacion(actuacion)">Actualizar</button>
+          <button class="btn btn-danger btn-sm" (click)="borrarActuacion(actuacion.id)">Borrar</button>
+        </td>
       </tr>
     </tbody>
   </table>
-</section>
+</main>
 
+
+<footer class="container-fluid d-flex flex-column justify-content-center align-items-center pt-4 fixed-bottom">
+  <p class="text-white">Esta herramienta ha sido desarrollada por Soltel Group, en su división de LegalTech.</p>
+  <div class="row pt-5 justify-content-center align-items-center">
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Sobre nosotros</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Sobre ELEX</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Nuestros Clientes</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Nuestros Partners</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Prueba eLex</a></li>
+      </ul>
+    </div>
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Comunicación</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Suscríbete a la Newsletter</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Contacto y sugerencias</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Prensa</a></li>
+      </ul>
+    </div>
+    <div class="col-md-4 mb-4">
+      <h5 class="cabezales fw-bold">Legal</h5>
+      <ul class="list-unstyled pt-2">
+        <li><a class="enlaces-footer text-decoration-none" href="#">Política de privacidad</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Política de cookies</a></li>
+        <li><a class="enlaces-footer text-decoration-none" href="#">Aviso legal y términos de uso</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

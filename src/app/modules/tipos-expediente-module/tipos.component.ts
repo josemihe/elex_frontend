@@ -23,6 +23,8 @@ export class TiposComponent implements OnInit{
   tipos: Tipos[] = []         // Defino array tipos para consulta
   mensaje: string = ""        // Mensaje para el alert
 
+  insertionCollapsed: boolean = false;
+
   // Propiedades del formulario
   materia: string = "---"
 
@@ -90,6 +92,11 @@ export class TiposComponent implements OnInit{
       });
     }
   }
+
+  toggleInsertionCollapse(): void {
+    this.insertionCollapsed = !this.insertionCollapsed;
+  }
+
 }
 
 
